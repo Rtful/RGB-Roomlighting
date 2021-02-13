@@ -104,37 +104,27 @@ class RGBController:
         oldRed = firstColor[0]
         oldGreen = firstColor[1]
         oldBlue = firstColor[2]
-        differenceR = firstColor[0] - secondColor[0]
-        differenceG = firstColor[1] - secondColor[1]
-        differenceB = firstColor[2] - secondColor[2]
-        # print(differenceR)
-        # print(differenceG)
-        # print(differenceB)
-        # print(max([abs(differenceB), abs(differenceG), abs(differenceR)]))
+        differenceR = secondColor[0] - oldRed
+        differenceG = secondColor[1] - oldGreen
+        differenceB = secondColor[2] - oldBlue
         maxDifference = max([abs(differenceB), abs(differenceG), abs(differenceR)])
-        stepsRed = abs(maxDifference/differenceR)
-        stepsGreen = abs(maxDifference/differenceG)
-        stepsBlue = abs(maxDifference/differenceB)
 
         for i in range(maxDifference):
-            newRed = oldRed + round(differenceR / stepsRed)
-            newGreen = oldGreen + round(differenceG / stepsGreen)
-            newBlue = oldBlue + round(differenceB / stepsBlue)
+            newRed = oldRed + round((differenceR/maxDifference) * i)
+            newGreen = oldGreen + round((differenceG/maxDifference) * i)
+            newBlue = oldBlue + round((differenceB/maxDifference) * i)
 
-            oldRed = newRed
-            oldGreen = newGreen
-            oldBlue = newBlue
             print(newRed, end=", ")
             print(newGreen, end=", ")
             print(newBlue)
             self.setAllColors(newRed, newGreen, newBlue)
-            time.sleep(0.1)
+            time.sleep(0.005)
 
     def fadeMode(self):
         # firstColor = self.getRGB(input("input fist color (hex or rgb separated by commas)"))
         # secondColor = self.getRGB(input("input fist color (hex or rgb separated by commas)"))
-        firstColor = self.getRGB('#1ED760')
-        secondColor = self.getRGB('#FCF84A')
+        firstColor = self.getRGB('#4ac7fc')
+        secondColor = self.getRGB('#fcf84a')
         self.fade(firstColor, secondColor)
 
     def listen(self):
@@ -150,7 +140,6 @@ class RGBController:
                 printInstructions = True
 
             elif mode == '2':
-                print("mode 2 was chosen")
                 self.fadeMode()
                 printInstructions = True
 
